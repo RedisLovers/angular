@@ -1,9 +1,14 @@
+<input [(ngModel)]="currentId"/> <button (click)="this.search()">Search</button>
 <h3>Top Heroes</h3>
 <div class="grid grid-pad">
-  <a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
-    </div>
-  </a>
+  <ng-container *ngFor="let value of values">
+    <a class="col-1-4">
+      <div class="module hero">
+        <h4>{{value.formDefinition.Title}}</h4>
+        <input [(ngModel)]="value.ValueString"/>
+        <button (click)="this.update(value)">Save</button>
+      </div>
+    </a>
+  </ng-container>
 </div>
-<hero-search></hero-search>
+<!-- <hero-search></hero-search> -->

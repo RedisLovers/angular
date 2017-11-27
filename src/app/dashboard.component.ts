@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero }        from './hero';
-import { HeroService } from './hero.service';
+import { Value }        from './value';
+import { ValueService } from './value.service';
+
+const FORM_ID = '9bc4a107-3ef5-4b22-aa2e-00001f3e3820';
 
 @Component({
   selector: 'my-dashboard',
@@ -9,12 +11,22 @@ import { HeroService } from './hero.service';
   styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent implements OnInit {
-  heroes: Hero[] = [];
-
-  constructor(private heroService: HeroService) { }
+  values: Value[] = [];
+  currentId: string = "";
+  constructor(private valueService: ValueService) { }
 
   ngOnInit(): void {
-    this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1, 5));
+    // this.valueService.getValues(FORM_ID)
+    //   .then(values => this.values = values);
+  }
+
+  search(): void {
+    this.valueService.getValues(this.currentId)
+    .then(values => this.values = values);
+  }
+
+  update(value): void {
+    console.log(value);
+    this.valueService.update(value);
   }
 }
