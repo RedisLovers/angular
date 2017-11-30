@@ -34,13 +34,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  updateRedis(value): void {
-    console.log(value);
-    this.valueService.update(value, true);
+  updateRedis(): void {
+    this.valueService.updateMultiple(this.redisValues, true);
   }
 
-  updateSql(value): void {
-    this.valueService.update(value, false);
+  updateSql(): void {
+    this.valueService.updateMultiple(this.mssqlValues, false);
   }
 }
 

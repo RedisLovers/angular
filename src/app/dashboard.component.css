@@ -50,6 +50,15 @@ h4 {
 .grid-pad > [class*='col-']:last-of-type {
   padding-right: 20px;
 }
+.header-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+.header-container button {
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
 @media (max-width: 600px) {
   .module {
     font-size: 10px;

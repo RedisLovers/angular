@@ -5,27 +5,31 @@
   </select> 
 </div>
 <div class="grid grid-pad">
-  <h3 *ngIf="redisValues.length">Redis data</h3>
+  <div *ngIf="redisValues.length" class="header-container">
+    <h3>Redis data</h3>
+    <button (click)="this.updateRedis()">Save</button>
+  </div>
   <ng-container *ngFor="let value of redisValues">
     <a class="col-1-4">
       <div class="module hero">
         <h4>{{formFieldDefinitions[value.FormFieldDefinitionId].Title}}</h4>
         <input [(ngModel)]="value.ValueString"/>
-        <button (click)="this.updateRedis(value)">Save</button>
       </div>
     </a>
   </ng-container>
 </div>
 <div class="grid grid-pad">
-    <h3 *ngIf="mssqlValues.length">MSSQL data</h3>
-    <ng-container *ngFor="let value of mssqlValues">
-      <a class="col-1-4">
-        <div class="module hero">
-          <h4>{{formFieldDefinitions[value.FormFieldDefinitionId].Title}}</h4>
-          <input [(ngModel)]="value.ValueString"/>
-          <button (click)="this.updateSql(value)">Save</button>
-        </div>
-      </a>
-    </ng-container>
+  <div *ngIf="mssqlValues.length" class="header-container">
+    <h3>MSSQL data</h3>
+    <button (click)="this.updateSql()">Save</button>
   </div>
+  <ng-container *ngFor="let value of mssqlValues">
+    <a class="col-1-4">
+      <div class="module hero">
+        <h4>{{formFieldDefinitions[value.FormFieldDefinitionId].Title}}</h4>
+        <input [(ngModel)]="value.ValueString"/>
+      </div>
+    </a>
+  </ng-container>
+</div>
 <!-- <hero-search></hero-search> -->

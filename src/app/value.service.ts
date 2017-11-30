@@ -9,8 +9,8 @@ import { Value } from './value';
 export class ValueService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private valuesUrl = 'http://95.174.100.38:4040/api/form-values';  // URL to web api
-  private formsUrl = 'http://95.174.100.38:4040/api/forms';  // URL to web api
+  private valuesUrl = 'http://localhost:4040/api/form-values';  // URL to web api
+  private formsUrl = 'http://localhost:4040/api/forms';  // URL to web api
 
   constructor(private http: Http) { }
 
@@ -67,6 +67,18 @@ export class ValueService {
       .catch(this.handleError);
   }
 
+  updateMultiple(values: Value[], isRedis: Boolean): Promise<Value> {
+    const url = `${this.valuesUrl}`;
+    let data = {
+      values: values,
+      isRedis
+    }
+    return this.http
+      .put(url, data, {headers: this.headers})
+      .toPromise()
+      .then(() => values)
+      .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
