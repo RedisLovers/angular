@@ -1,14 +1,31 @@
-<input [(ngModel)]="currentId"/> <button (click)="this.search()">Search</button>
-<h3>Top Heroes</h3>
+<div>
+  <select type="select" [(ngModel)]="currentFormId" (ngModelChange)="formSelected()">
+    <option [value]="''">Select a form</option>
+    <option *ngFor="let f of forms" [value]="f.FormId">{{f.definition.Name}}</option>
+  </select> 
+</div>
 <div class="grid grid-pad">
-  <ng-container *ngFor="let value of values">
+  <h3 *ngIf="redisValues.length">Redis data</h3>
+  <ng-container *ngFor="let value of redisValues">
     <a class="col-1-4">
       <div class="module hero">
-        <h4>{{value.formDefinition.Title}}</h4>
+        <h4>{{formFieldDefinitions[value.FormFieldDefinitionId].Title}}</h4>
         <input [(ngModel)]="value.ValueString"/>
-        <button (click)="this.update(value)">Save</button>
+        <button (click)="this.updateRedis(value)">Save</button>
       </div>
     </a>
   </ng-container>
 </div>
+<div class="grid grid-pad">
+    <h3 *ngIf="mssqlValues.length">MSSQL data</h3>
+    <ng-container *ngFor="let value of mssqlValues">
+      <a class="col-1-4">
+        <div class="module hero">
+          <h4>{{formFieldDefinitions[value.FormFieldDefinitionId].Title}}</h4>
+          <input [(ngModel)]="value.ValueString"/>
+          <button (click)="this.updateSql(value)">Save</button>
+        </div>
+      </a>
+    </ng-container>
+  </div>
 <!-- <hero-search></hero-search> -->

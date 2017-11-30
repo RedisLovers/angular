@@ -9,17 +9,25 @@ import { Value } from './value';
 export class ValueService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private valuesUrl = 'http://localhost:4040/api/form-values';  // URL to web api
+  private valuesUrl = 'http://95.174.100.38:4040/api/form-values';  // URL to web api
+  private formsUrl = 'http://95.174.100.38:4040/api/forms';  // URL to web api
 
   constructor(private http: Http) { }
 
-  getValues(formId: string): Promise<Value[]> {
+  getValues(formId: string): Promise<any> {
     return this.http.get(this.valuesUrl + `/${formId}`)
                .toPromise()
                .then(response => response.json() as Value[])
                .catch(this.handleError);
   }
 
+
+  getForms(): Promise<String[]>{
+    return this.http.get(this.formsUrl)
+                    .toPromise()
+                    .then(response => response.json() as String[])
+                    .catch(this.handleError);
+  }
 
   // getHero(id: string): Promise<Value> {
   //   const url = `${this.valuesUrl}/${id}`;
@@ -45,16 +53,20 @@ export class ValueService {
   //     .catch(this.handleError);
   // }
 
-  update(value: Value): Promise<Value> {
+  update(value: Value, isRedis: Boolean): Promise<Value> {
     const url = `${this.valuesUrl}/${value.FormFieldValueId}`;
     let val = {...value};
-    delete val.formDefinition;
+    let data = {
+      value: val,
+      isRedis
+    }
     return this.http
-      .put(url, JSON.stringify(val), {headers: this.headers})
+      .put(url, data, {headers: this.headers})
       .toPromise()
       .then(() => value)
       .catch(this.handleError);
   }
+
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only

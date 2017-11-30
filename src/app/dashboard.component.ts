@@ -11,22 +11,43 @@ const FORM_ID = '9bc4a107-3ef5-4b22-aa2e-00001f3e3820';
   styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent implements OnInit {
-  values: Value[] = [];
-  currentId: string = "";
-  constructor(private valueService: ValueService) { }
+  redisValues: Value[] = [];
+  mssqlValues: Value[] = [];
+  formFieldDefinitions: Object;
+  forms: Object[];
+  currentFormId: string = "";
+  constructor(private valueService: ValueService) {
+    this.forms = []
+  }
 
   ngOnInit(): void {
-    // this.valueService.getValues(FORM_ID)
-    //   .then(values => this.values = values);
+    this.valueService.getForms()
+    .then(forms => this.forms = forms);
   }
 
-  search(): void {
-    this.valueService.getValues(this.currentId)
-    .then(values => this.values = values);
+  formSelected(): void {
+    this.valueService.getValues(this.currentFormId)
+    .then(data=> {
+      this.redisValues = data.redis.sort(sortByFormFiledValueId);
+      this.mssqlValues = data.mssql.sort(sortByFormFiledValueId);
+      this.formFieldDefinitions = data.formFieldDefinitions;
+    });
   }
 
-  update(value): void {
+  updateRedis(value): void {
     console.log(value);
-    this.valueService.update(value);
+    this.valueService.update(value, true);
   }
+
+  updateSql(value): void {
+    this.valueService.update(value, false);
+  }
+}
+
+function sortByFormFiledValueId(a,b) {
+  if (a.FormFieldDefinitionId < b.FormFieldDefinitionId)
+    return -1;
+  if (a.FormFieldDefinitionId > b.FormFieldDefinitionId)
+    return 1;
+  return 0;
 }
