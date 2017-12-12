@@ -9,8 +9,8 @@ import { Value } from './value';
 export class ValueService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private valuesUrl = 'http://localhost:4040/api/form-values';  // URL to web api
-  private formsUrl = 'http://localhost:4040/api/forms';  // URL to web api
+  private valuesUrl = 'http://95.174.100.38:4040/api/form-values';  // URL to web api
+  private formsUrl = 'http://95.174.100.38:4040/api/forms';  // URL to web api
 
   constructor(private http: Http) { }
 
